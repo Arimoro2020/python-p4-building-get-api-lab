@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 from random import randint, choice as rc
+import random
 
 from faker import Faker
 
@@ -35,7 +36,7 @@ with app.app_context():
         bg = BakedGood(
             name=name,
             price=randint(1,10),
-            bakery=rc(bakeries)
+            bakery_id=random.randint(1, 21)
         )
 
         baked_goods.append(bg)
