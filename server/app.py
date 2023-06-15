@@ -20,9 +20,9 @@ def index():
 
 @app.route('/bakeries')
 def bakeries():
-    bakeries = Bakery.query.all()
+    all_bakeries = Bakery.query.all()
     all = []
-    for bakery in bakeries:
+    for bakery in all_bakeries:
         all_dict = {
         "name": bakery.name,
         "id": bakery.id,
@@ -30,22 +30,22 @@ def bakeries():
         }
         all.append(all_dict)
 
-    res = make_response(all, 200, {'Content-Type': "application/json"})
-    
+    res = make_response(all, 200)
+    res.headers['Content-Type'] = 'application/json'
     return res
 
 @app.route('/bakeries/<int:id>')
 def bakery_by_id(id):
     bakery_id = Bakery.query.filter(Bakery.id==id).first()
   
-    all_dict = {
-    "name": bakery_id.name,
-    "id": bakery_id.id,
-    "created_at":bakery_id.created_at
-    }
+    # all_dict = {
+    # "name": bakery_id.name,
+    # "id": bakery_id.id,
+    # "created_at":bakery_id.created_at
+    # }
        
-    response = make_response(all_dict, 200)
-    response.headers['Content-Type'] = "application/json"
+    response = make_response(bakery_id.to_dict(), 200)
+    response.headers['Content-Type'] = 'application/json'
     return response
 
 @app.route('/baked_goods/by_price')
@@ -62,7 +62,8 @@ def baked_goods_by_price():
         }
         all.append(all_dict)
 
-    response = make_response(all, 200, {'Content-Type': "application/json"})
+    response = make_response(all, 200)
+    response.headers['Content-Type'] = 'application/json'
     return response
 
 
@@ -79,8 +80,8 @@ def most_expensive_baked_good():
     }
     
 
-    response = make_response(most_price_dict, 200, {'Content-Type': "application/json"})
-
+    response = make_response(most_price_dict, 200)
+    response.headers['Content-Type'] = 'application/json'
     return response
 
 if __name__ == '__main__':
